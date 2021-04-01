@@ -10,9 +10,10 @@ public class Laboratorio1 {
     public static void main(String[] args) {
     
         BufferedReader reader;
-        BufferedWriter writer;
-        // File folder = new File("./mx-amazon-devices.csv");
-        File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
+        BufferedWriter writerC;
+        BufferedWriter writerP;
+         File folder = new File("./mx-amazon-devices.csv");
+       // File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
         File[] fileList = folder.listFiles();
         
         ArrayList<String> filenames = new ArrayList<String>(); 
@@ -28,28 +29,32 @@ public class Laboratorio1 {
             }
             
             
-        // System.out.println(fileList[i].getName());
+      
   } 
 }
-   // System.out.println(filenames.size());    
-   
-       //String[] filenames =  {"./mx-amazon-devices.csv"};
+
         try{
-        System.out.println(filenames.size());
+
         for(String fn : filenames){
+            
         ArrayList<ArrayList<String>> dataset = new ArrayList<ArrayList<String>>();
-        String outfilename = fn.substring(0,fn.length() - 4) + new String("_out") + fn.substring(fn.length()- 4);
-        //System.out.println(outfilename);  
+        String outfilenameC = fn.substring(0,fn.length() - 4) + new String("_outCola") + fn.substring(fn.length()- 4);
+        String outfilenameP = fn.substring(0,fn.length() - 4) + new String("_outPila") + fn.substring(fn.length()- 4);
         
+        System.out.println(outfilenameC.substring(89));//imprime los archivos de salida cola
+         System.out.println(outfilenameP.substring(89));//imprime los archivos de salida pila
+         
         reader = new BufferedReader(new FileReader(fn));
-        writer = new BufferedWriter(new FileWriter(outfilename, false));
+        
+        writerC = new BufferedWriter(new FileWriter(outfilenameC, false));
+        writerP = new BufferedWriter(new FileWriter(outfilenameP, false));
         
         String line = reader.readLine();
         
         while(line != null){
                      ArrayList<String> parsing1 = new ArrayList<String>(); 
                      String[] row1;
-                     row1 = line.split("\\|",-1);//string linea ahora es un arreglo de strings divididos por |
+                     row1 = line.split("\\|",-1);
                      for(String x : row1){
                          
                          parsing1.add(x);
@@ -64,35 +69,33 @@ public class Laboratorio1 {
        
        String n = fileList[cont].getName();
              n= n.substring(3, n.length()-4);
-       //     System.out.println(n);
+   
        
         for(int progress_index = 1; progress_index < dataset.size(); progress_index++){//Linea 0 no aporta datos
             
         String prod_name = dataset.get(progress_index).get(3);//nombre del producto
-       // System.out.println("nombre: "+prod_name);
+    
+       
         boolean found = false;
         
         for(tripleta search : t_count){
-            
+ 
        
-            
         if(search.get_producto().equals(prod_name)){
-            System.out.println("get producto: " +search.get_producto());
             found = true;
          
             search.incConteo();
            
+            }
         }
           
         if(!found){
                                             //n= nombre archivo sin scv ni mx-
             tripleta new_tripleta = new tripleta(n, prod_name);
-            t_count.add(new_tripleta);
+            t_count.add(new tripleta(n,prod_name));
+
+                }
             
-        }
-          
-            }
-        
         }
         
         Collections.sort(t_count);
@@ -103,38 +106,39 @@ public class Laboratorio1 {
         for(tripleta t_d : t_count){
             queue.enqueue(t_d);
         }
+        //escribe ordenado
+         writerC.write("Productos más solicitados de cada categoría:" + "\n");
+         for(tripleta t_d : t_count){  
+            if(t_d.get_conteo()==1){
+            
+        writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", " + t_d.get_conteo() +"vez" +"\n");}
+            else{
+             writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", comprado " + t_d.get_conteo() +" veces"+"\n");
+            }
+        }
+        
         
         while(!queue.isEmpty()){
             stack.push((tripleta)queue.dequeue());
         }
+ 
         
-        while(!stack.isEmpty()){
+        writerP.write("Productos más solicitados en orden creciente: " + "\n");
+        while(!stack.isEmpty()){    //escribe nuevo orden
             tripleta t_p;
             t_p = (tripleta)stack.pop();
-            writer.write(t_p.get_categoria() + "-" + t_p.get_producto() + ", comprado " + t_p.get_conteo() + "veces"+"\n");
+            if(t_p.get_conteo()==1){
+              writerP.write(t_p.get_categoria() + "-" + t_p.get_producto() + ", comprado " + t_p.get_conteo() + " vez"+"\n");
+            }
+            else{
+             writerP.write(t_p.get_categoria() + "-" + t_p.get_producto() + ", comprado " + t_p.get_conteo() + " veces"+"\n");
+            }
+            
         }
-        
-        
-       /* for(tripleta t_d : t_count){  //imprime ordenado
-            
-        writer.write(t_d.get_categoria() + ", " + t_d.get_producto() + ", " + t_d.get_conteo() +"\n");
-        }*/
-        
-       /* for(ArrayList a : dataset){   //imprime tal cual, sin orden ni nada
-            
-            for(int j = 0; j < a.size()-1; j++){
-            
-                writer.write(a.get(j).toString());
-                writer.write("|");
-                writer.write(a.get(j).toString());
-             }
-       
-        writer.write("\n");
-
-        }*/ 
 
         reader.close();
-        writer.close();
+        writerC.close();
+        writerP.close();
         cont++;
         }
         
