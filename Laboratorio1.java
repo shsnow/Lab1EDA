@@ -16,7 +16,7 @@ public class Laboratorio1 {
         File[] fileList = folder.listFiles();
         
         ArrayList<String> filenames = new ArrayList<String>(); 
-       
+        
         int cont =0;
         
         for (int i = 0; i < fileList.length; i++) {
@@ -24,11 +24,9 @@ public class Laboratorio1 {
             try{
          filenames.add(fileList[i].getCanonicalPath());
             }catch(IOException e){
-                 e.printStackTrace();
             }
-            
-            
-      
+            e.printStackTrace();
+
   }
 }
 
@@ -41,7 +39,7 @@ public class Laboratorio1 {
         String outfilenameP = fn.substring(0,fn.length() - 4) + new String("_outPila") + fn.substring(fn.length()- 4);
         
 
-         
+        
         reader = new BufferedReader(new FileReader(fn));
         
         writerC = new BufferedWriter(new FileWriter(outfilenameC, false));
@@ -54,31 +52,31 @@ public class Laboratorio1 {
                      String[] row1;
                      row1 = line.split("\\|",-1);
                      for(String x : row1){
-                         
+
                          parsing1.add(x);
                      }
                      
                      dataset.add(parsing1);
                      line = reader.readLine();
-                 }
+
+        }
         
         ArrayList<tripleta> t_count = new ArrayList<tripleta>();
-     
+        
        
-       String n = fileList[cont].getName();
+        String n = fileList[cont].getName();
              n= n.substring(3, n.length()-4);
-   
-       
+            
+        
         for(int progress_index = 1; progress_index < dataset.size(); progress_index++){//Linea 0 no aporta datos
             
         String prod_name = dataset.get(progress_index).get(3);//nombre del producto
-    
-       
+               
+
         boolean found = false;
-        
         for(tripleta search : t_count){
- 
-       
+            
+            
         if(search.get_producto().equals(prod_name)){
             found = true;
          
@@ -93,11 +91,10 @@ public class Laboratorio1 {
             t_count.add(new tripleta(n,prod_name));
 
                 }
-            
+        
         }
         
         Collections.sort(t_count);
-        
         cola queue = new cola();
         pila stack = new pila();
         
