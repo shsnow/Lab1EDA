@@ -13,17 +13,19 @@ public class Laboratorio1 {
         BufferedWriter writerC;
         BufferedWriter writerP;
          File folder = new File("./mx-amazon-devices.csv");
-       // File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
+        //File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
         File[] fileList = folder.listFiles();
         
-        ArrayList<String> filenames = new ArrayList<String>(); 
+        ArrayList<String> files = new ArrayList<String>();//nombres
+        ArrayList<String> filenames = new ArrayList<String>(); //rutas
        
         int cont =0;
         
         for (int i = 0; i < fileList.length; i++) {
-        if(fileList[i].isFile()) {
+        if(fileList[i].isFile()){
             try{
          filenames.add(fileList[i].getCanonicalPath());
+         files.add(fileList[i].getName());
             }catch(IOException e){
                  e.printStackTrace();
             }
@@ -32,7 +34,6 @@ public class Laboratorio1 {
       
   } 
 }
-
         try{
 
         for(String fn : filenames){
@@ -41,9 +42,7 @@ public class Laboratorio1 {
         String outfilenameC = fn.substring(0,fn.length() - 4) + new String("_outCola") + fn.substring(fn.length()- 4);
         String outfilenameP = fn.substring(0,fn.length() - 4) + new String("_outPila") + fn.substring(fn.length()- 4);
         
-        System.out.println(outfilenameC.substring(89));//imprime los archivos de salida cola
-         System.out.println(outfilenameP.substring(89));//imprime los archivos de salida pila
-         
+              
         reader = new BufferedReader(new FileReader(fn));
         
         writerC = new BufferedWriter(new FileWriter(outfilenameC, false));
@@ -111,7 +110,8 @@ public class Laboratorio1 {
          for(tripleta t_d : t_count){  
             if(t_d.get_conteo()==1){
             
-        writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", " + t_d.get_conteo() +"vez" +"\n");}
+        writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", " + t_d.get_conteo() +"vez" +"\n");
+            }
             else{
              writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", comprado " + t_d.get_conteo() +" veces"+"\n");
             }
@@ -145,7 +145,7 @@ public class Laboratorio1 {
         }catch(IOException e){
             e.printStackTrace();
         }
-       
+         System.out.println("Archivos de salida creados!");
     }
-    
+  
 }
