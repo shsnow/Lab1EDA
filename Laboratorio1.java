@@ -20,16 +20,16 @@ public class Laboratorio1 {
         int cont =0;
         
         for (int i = 0; i < fileList.length; i++) {
-        if(fileList[i].isFile()) {
+        if(fileList[i].isFile()){
             try{
          filenames.add(fileList[i].getCanonicalPath());
+         files.add(fileList[i].getName());
             }catch(IOException e){
             }
             e.printStackTrace();
 
   }
 }
-
         try{
 
         for(String fn : filenames){
@@ -106,7 +106,8 @@ public class Laboratorio1 {
          for(tripleta t_d : t_count){  
             if(t_d.get_conteo()==1){
             
-        writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", " + t_d.get_conteo() +"vez" +"\n");}
+        writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", " + t_d.get_conteo() +"vez" +"\n");
+            }
             else{
              writerC.write(t_d.get_categoria() + "-" + t_d.get_producto() + ", comprado " + t_d.get_conteo() +" veces"+"\n");
             }
@@ -140,7 +141,7 @@ public class Laboratorio1 {
         }catch(IOException e){
             e.printStackTrace();
         }
-       
+         System.out.println("Archivos de salida creados!");
     }
-    
+  
 }
