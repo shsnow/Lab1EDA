@@ -12,8 +12,10 @@ public class Laboratorio1 {
         BufferedReader reader;
         BufferedWriter writerC;
         BufferedWriter writerP;
-         File folder = new File("./mx-amazon-devices.csv");
+        File folder = new File("./csv");
         //File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
+        //File folder = new File("C:\\Users\\Jonas\\Documents\\GitHub\\Lab1EDA\\csv");
+        
         File[] fileList = folder.listFiles();
         
         ArrayList<String> files = new ArrayList<String>();//nombres
