@@ -1,4 +1,3 @@
-
 package laboratorio1;
 
 import java.util.*; 
@@ -12,8 +11,8 @@ public class Laboratorio1 {
         BufferedReader reader;
         BufferedWriter writerC;
         BufferedWriter writerP;
-         File folder = new File("./mx-amazon-devices.csv");
-       // File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
+        // File folder = new File("./mx-amazon-devices.csv");
+        File folder = new File("C:\\Users\\Jonas\\Documents\\GitHub\\Lab1EDA\\csv");
         File[] fileList = folder.listFiles();
         
         ArrayList<String> filenames = new ArrayList<String>(); 
@@ -30,7 +29,7 @@ public class Laboratorio1 {
             
             
       
-  } 
+  }
 }
 
         try{
@@ -41,8 +40,7 @@ public class Laboratorio1 {
         String outfilenameC = fn.substring(0,fn.length() - 4) + new String("_outCola") + fn.substring(fn.length()- 4);
         String outfilenameP = fn.substring(0,fn.length() - 4) + new String("_outPila") + fn.substring(fn.length()- 4);
         
-        System.out.println(outfilenameC.substring(89));//imprime los archivos de salida cola
-         System.out.println(outfilenameP.substring(89));//imprime los archivos de salida pila
+
          
         reader = new BufferedReader(new FileReader(fn));
         
