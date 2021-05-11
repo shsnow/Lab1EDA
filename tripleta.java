@@ -1,6 +1,4 @@
-package laboratorio1;
-
-public class tripleta implements Comparable //interfaz
+public class tripleta implements Comparable
 {
     private String categoria;
     private String nombre_producto;
@@ -18,6 +16,13 @@ public class tripleta implements Comparable //interfaz
         categoria = c;
         nombre_producto = n;
         conteo = 1;
+    }
+
+    public tripleta(String c, String n, int x)
+    {
+        categoria = c;
+        nombre_producto = n;
+        conteo = x;
     }
 
     public void set_categoria(String c)
