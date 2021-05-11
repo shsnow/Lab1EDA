@@ -6,8 +6,6 @@ public class Laboratorio2{
     public static void main(String[] args){
     
         BufferedReader reader;
-        BufferedWriter writerC;
-        BufferedWriter writerP;
         //File folder = new File("./csv");
         //File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio1\\src\\laboratorio1\\csv");
         File folder = new File("C:\\Users\\Jonas\\Documents\\GitHub\\Lab1EDA\\csv");
@@ -16,7 +14,7 @@ public class Laboratorio2{
         ArrayList<String> filenames = new ArrayList<String>(); //rutas
         //para el arbol binario (la 4)
         ArrayList<ArrayList<ArrayList<String>>> datasets = new ArrayList<ArrayList<ArrayList<String>>>();
-       
+        ArrayList<ArrayList<tripleta>> datasets_triple = new ArrayList<ArrayList<tripleta>>();
         int cont =0;
         
         for(int i = 0; i < fileList.length; i++){
@@ -54,7 +52,7 @@ public class Laboratorio2{
                 ArrayList<tripleta> t_count = new ArrayList<tripleta>();
                 //quita el categoria
                 String cat = fileList[cont].getName();
-                cat = n.substring(3, n.length()-4);
+                cat = cat.substring(3, cat.length()-4);
                 //
 
                 //cuantas veces esta en la lista
@@ -71,22 +69,18 @@ public class Laboratorio2{
                     }
                     //  
                     if(!found){ //cat= nombre categoria sin scv ni mx-
-                        tripleta new_tripleta = new tripleta(cat, prod_name);
+                        //tripleta new_tripleta = new tripleta(cat, prod_name);
                         t_count.add(new tripleta(cat,prod_name));
                     }    
                     
                 }
                 datasets.add(dataset);
+                datasets_triple.add(t_count);
                 //
 
-                // comparar OE y tiempo de 3 algoritmos de ordenamiento
 
-
-
-                //
-
-                //cola prioridad  escribir en un archivo los 3 productos mas y menos comprados po archivo
-
+                //cola prioridad  escribir en un archivo los 3 productos mas y menos comprados por archivo
+                
 
 
                 //
@@ -94,6 +88,24 @@ public class Laboratorio2{
 
 
             }
+
+
+            // comparar OE y tiempo de 3 algoritmos de ordenamiento
+            HeapSort heapSort = new HeapSort();
+            MergeSort mergeSort = new MergeSort();
+            SelectionSort selectionSort = new SelectionSort();
+            //adaptar los sort a vectores y usar las tripletas para comparar
+            heapSort.sort(arr);
+            mergeSort.sort(arr, l, r);
+            heapSort.sort(arr);
+            //
+
+
+            // arbol binario compara todos los dataset
+
+
+
+            //
         }
         catch(IOException e){
             e.printStackTrace();
