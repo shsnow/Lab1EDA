@@ -15,6 +15,7 @@ public class Laboratorio2{
         //para el arbol binario (la 4)
         ArrayList<ArrayList<ArrayList<String>>> datasets = new ArrayList<ArrayList<ArrayList<String>>>();
         ArrayList<ArrayList<tripleta>> datasets_triple = new ArrayList<ArrayList<tripleta>>();
+        
         int cont =0;
         
         for(int i = 0; i < fileList.length; i++){
@@ -91,13 +92,15 @@ public class Laboratorio2{
 
 
             // comparar OE y tiempo de 3 algoritmos de ordenamiento
-            HeapSort heapSort = new HeapSort();
+            QuickSort quickSort = new QuickSort();
             MergeSort mergeSort = new MergeSort();
             SelectionSort selectionSort = new SelectionSort();
+            ArrayList<tripleta> datasetTest = datasets_triple.get(0);
+            ArrayList<tripleta> datasetTest = datasets_triple.get(0);
             //adaptar los sort a vectores y usar las tripletas para comparar
-            heapSort.sort(arr);
-            mergeSort.sort(arr, l, r);
-            heapSort.sort(arr);
+            heapSort.sort(datasetTest);
+            mergeSort.sort(datasetTest, 0, datasetTest.size()-1);
+            heapSort.sort(datasetTest);
             //
 
 
