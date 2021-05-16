@@ -92,15 +92,19 @@ public class Laboratorio2{
 
 
             // comparar OE y tiempo de 3 algoritmos de ordenamiento
-            QuickSort quickSort = new QuickSort();
-            MergeSort mergeSort = new MergeSort();
+            QuickSort quickSort = new QuickSort(datasetSort);
+            MergeSort mergeSort = new MergeSort(datasetSort);
             SelectionSort selectionSort = new SelectionSort();
-            ArrayList<tripleta> datasetTest = datasets_triple.get(0);
-            ArrayList<tripleta> datasetTest = datasets_triple.get(0);
+            ArrayList<tripleta> datasetSort = datasets_triple.get(0);
+            ArrayList<tripleta> datasetUnsort = datasets_triple.get(0);
             //adaptar los sort a vectores y usar las tripletas para comparar
-            heapSort.sort(datasetTest);
-            mergeSort.sort(datasetTest, 0, datasetTest.size()-1);
-            heapSort.sort(datasetTest);
+            selectionSort.sort(datasetSort);
+            
+            datasetSort = datasetUnsort;
+            mergeSort.sort(0, datasetTest.size()-1);
+            
+            datasetSort = datasetUnsort;
+            quickSort.sort(0, datasetSort.size()-1);
             //
 
 
@@ -110,10 +114,9 @@ public class Laboratorio2{
 
             //
         }
-        catch(IOException e){
+        catch(NullPointerException e){
             e.printStackTrace();
         }
-        System.out.println("Archivos de salida creados!");
     }
   
 }

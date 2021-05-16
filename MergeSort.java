@@ -1,69 +1,85 @@
+import java.util.ArrayList;
+
 public class MergeSort{
 
-    void merge(int arr[], int l, int m, int r)
-    {
-        int n1 = m - l + 1;
-        int n2 = r - m;
+    private ArrayList<tripleta> inArr;
+    
+    public ArrayList<tripleta> getSortedArray() {
+        return inArr;
+    }
+ 
+    public MergeSort(ArrayList<tripleta> inArr){
+        this.inArr = inArr;
+    }
+    
+    public void Sorted(){       
+        sort(0, this.inArr.size()-1);
+    }
+    
+    public void sort(int l,int r){
+        
+        //sort till you breakdown your list to single element
+        if(l<r && (r-l)>=1){
+            int mid = (r + l)/2;
+            sort(l, mid);
+            sort(mid+1, r);        
+            
+            //merging Sorted array produce above into one sorted array
+            merger(l,mid,r);            
+        }       
+    }   
+    
+    public void merger(int l,int m,int r){
+        
+        //Below is the mergedarray that will be sorted array Array[i-m] , Array[(m+1)-r]
+        ArrayList<tripleta> mergesortArr = new ArrayList<tripleta>();
+        
+        int leftIndex = l;
+        int rightIndex = m+1;
+        
+        while(leftIndex<=m && rightIndex<=r){
 
-        int L[] = new int [n1];
-        int R[] = new int [n2];
-  
-        for (int i=0; i<n1; ++i)
-            L[i] = arr[l + i];
-        for (int j=0; j<n2; ++j)
-            R[j] = arr[m + 1+ j];
-  
-
-        int i = 0, j = 0;
-
-        int k = l;
-        while (i < n1 && j < n2)
-        {
-            if (L[i] <= R[j])
-            {
-                arr[k] = L[i];
-                i++;
+            if(inArr.get(leftIndex).compareTo(inArr.get(rightIndex)) > 0){
+                mergesortArr.add(inArr.get(leftIndex));
+                leftIndex++;
+            }else{
+                mergesortArr.add(inArr.get(rightIndex));
+                rightIndex++;
             }
-            else
-            {
-                arr[k] = R[j];
-                j++;
+
+            /*
+            if(inArr.get(leftIndex)<=inArr.get(rightIndex)){
+                mergesortArr.add(inArr.get(leftIndex));
+                leftIndex++;
+            }else{
+                mergesortArr.add(inArr.get(rightIndex));
+                rightIndex++;
             }
-            k++;
+            */
+        }       
+        
+        //Either of below while loop will execute
+
+        while(leftIndex<=m){
+            mergesortArr.add(inArr.get(leftIndex));
+            leftIndex++;
         }
-  
-        while (i < n1)
-        {
-            arr[k] = L[i];
-            i++;
-            k++;
+        
+        while(rightIndex<=r){
+            mergesortArr.add(inArr.get(rightIndex));
+            rightIndex++;
         }
-        while (j < n2)
-        {
-            arr[k] = R[j];
+
+        int i = 0;
+        int j = l;
+        //Setting sorted array to original one
+        while(i<mergesortArr.size()){
+            inArr.set(j, mergesortArr.get(i++));
             j++;
-            k++;
-        }
-    }
-    void sort(int arr[], int l, int r)
-    {
-        if (l < r)
-        {
-            int m = (l+r)/2;
-            sort(arr, l, m);
-            sort(arr , m+1, r);
-
-            merge(arr, l, m, r);
         }
     }
 
-    static void printArray(int arr[])
-    {
-        int n = arr.length;
-        for (int i=0; i<n; ++i)
-            System.out.print(arr[i] + " ");
-        System.out.println();
-    }
+
 
     public static void main(String args[])
     {
