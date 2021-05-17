@@ -3,7 +3,7 @@ import java.io.*;
 
 
 public class Laboratorio2{
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
     
         BufferedReader reader;
         //File folder = new File("./csv");
@@ -92,16 +92,16 @@ public class Laboratorio2{
 
 
             // comparar OE y tiempo de 3 algoritmos de ordenamiento
+            ArrayList<tripleta> datasetSort = datasets_triple.get(0);
+            ArrayList<tripleta> datasetUnsort = datasets_triple.get(0);
             QuickSort quickSort = new QuickSort(datasetSort);
             MergeSort mergeSort = new MergeSort(datasetSort);
             SelectionSort selectionSort = new SelectionSort();
-            ArrayList<tripleta> datasetSort = datasets_triple.get(0);
-            ArrayList<tripleta> datasetUnsort = datasets_triple.get(0);
             //adaptar los sort a vectores y usar las tripletas para comparar
             selectionSort.sort(datasetSort);
             
             datasetSort = datasetUnsort;
-            mergeSort.sort(0, datasetTest.size()-1);
+            mergeSort.sort(0, datasetSort.size()-1);
             
             datasetSort = datasetUnsort;
             quickSort.sort(0, datasetSort.size()-1);

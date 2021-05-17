@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class QuickSort {
     private static ArrayList<tripleta> inputArray = new ArrayList<tripleta>();
             
@@ -23,7 +25,7 @@ public class QuickSort {
             int init = low;
             int length = high;
             //el pivote sera el ultimo elemento de las tripletas
-            int pivot = inputArray.get(high);
+            tripleta pivot = inputArray.get(high);
 
                     
             while(true){
@@ -54,7 +56,7 @@ public class QuickSort {
                     init++;
 
                 }else{
-                    System.out.println("\n---------Iteration highs---------");
+
                     return length;
                 }
             }

@@ -12,9 +12,6 @@ public class MergeSort{
         this.inArr = inArr;
     }
     
-    public void Sorted(){       
-        sort(0, this.inArr.size()-1);
-    }
     
     public void sort(int l,int r){
         

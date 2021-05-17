@@ -3,8 +3,7 @@ import java.util.ArrayList;
 //arrayList
 public class SelectionSort{
     
-    void sort(ArrayList<tripletas> arr)
-    {  
+    void sort(ArrayList<tripleta> arr){  
         int n = arr.size();
 
         for (int i = 0; i < n-1; i++)
@@ -20,7 +19,7 @@ public class SelectionSort{
             arr.set(i,temp);
         }
     }
-    void printArray(ArrayList<tripletas> arr)
+    void printArray(ArrayList<tripleta> arr)
     {
         int n = arr.size();
         for (int i=0; i<n; ++i)
