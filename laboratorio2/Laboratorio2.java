@@ -96,8 +96,8 @@ public class Laboratorio2{
            
             // comparar OE y tiempo de 3 algoritmos de ordenamiento
             ArrayList<tripleta> datasetSort = datasets_triple.get(0);
-            int length = datasetSort.size() -1;
             ArrayList<tripleta> datasetUnsort = datasets_triple.get(0);
+            int length = datasetSort.size() -1;
            long inicio,fin;
            duble duracion;
 
@@ -107,6 +107,7 @@ public class Laboratorio2{
             fin = System.nanoTime();
             duracion = (double)(fin - inicio)/1000000;
             System.out.println("el tiempo de duracion del mergeSort es : " + duracion);
+            datasetSort = datasetUnsort;
 
             inicio = System.nanoTime();
             SelectionSort selectionSort = new SelectionSort();       
@@ -114,6 +115,7 @@ public class Laboratorio2{
             fin = System.nanoTime();
             duracion = (double)(fin - inicio)/1000000;
             System.out.println("el tiempo de duracion del selectionSort es : " + duracion);
+            datasetSort = datasetUnsort;
 
             inicio = System.nanoTime();
             QuickSort quickSort = new QuickSort(datasetSort);
@@ -152,7 +154,7 @@ public class Laboratorio2{
 
             }
             
-         tripleta[] data;
+            tripleta[] data;
             data = new tripleta[t_count.size()];
             
             for(int i =0; i<t_count.size(); i++){
