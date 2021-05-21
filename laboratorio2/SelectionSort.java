@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import Laboratorio2.tripleta;
 //arrayList
 public class SelectionSort{
-    
+    public SelectionSort(){
+    }
    
     void sort(ArrayList<tripleta> arr){  
         int n = arr.size();
