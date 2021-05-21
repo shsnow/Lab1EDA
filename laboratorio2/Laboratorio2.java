@@ -222,53 +222,30 @@ public class Laboratorio2{
                 reader.close();
                 cont++;  
             }
+
              writer.close();
-             System.out.println(Bigpq.size());
-             System.out.println(Bigpq.max().get_conteo());
-             
-              
-            BST<Integer, ArrayList<tripleta>> bst = new BST<Integer,ArrayList<tripleta>>();
-            
-              while(!Bigpq.isEmpty()){
-                BigArr.add(Bigpq.delMax());
-            }
-            boolean primero =true;
-            ArrayList<tripleta> aux = new ArrayList<tripleta>();
-            for(int i =0;i<BigArr.size()-1;i++){
-            if(primero == true){
-            aux.add(BigArr.get(i));
-            primero = false;
-            }
-            if((BigArr.get(i).get_conteo() == BigArr.get(i+1).get_conteo())){
-            aux.add(BigArr.get(i+1));
-            
-                if(i ==BigArr.size() -1){
-                bst.put(BigArr.get(i).get_conteo(), aux);
-                }
-            
-            }else{
-                bst.put(BigArr.get(i).get_conteo(), aux);
-                aux.clear();
-                primero = true;
-            }
-            }
+
             //la 4
             BST<Integer, ArrayList<tripleta>> theArbol = new BST<Integer,ArrayList<tripleta>>();
             //<cantidad, tripletas con esa cantidad>
             //definir tripleta con los conteo
             //añadir tripletas de a una
             Map<Integer,ArrayList<tripleta>> cantidadTriple = new HashMap<Integer,ArrayList<tripleta>>();
-            ArrayList<tripleta> auxi;
+            ArrayList<tripleta> auxi  ;
             for(tripleta tri : triple_data){
 
                 if(cantidadTriple.containsKey(tri.get_conteo())){
-                    cantidadTriple.get(tri).add(tri);
+                    auxi = cantidadTriple.get(tri.get_conteo());
+
+                    auxi.add(tri);
+
+                    cantidadTriple.put(tri.get_conteo(), auxi);
                     
                 }
                 else{
-                    auxi = new ArrayList<tripleta>();
-                    auxi.add(tri);
-                    cantidadTriple.put(tri.get_conteo(),auxi);
+                    
+                    cantidadTriple.put(tri.get_conteo(),new ArrayList<tripleta>());
+                    cantidadTriple.get(tri.get_conteo()).add(tri);
                 }
 
             }   
@@ -288,31 +265,7 @@ public class Laboratorio2{
             System.out.println("2. Productos que han vendido menos de x unidades");
             System.out.println("3. Productos que han vendido exactamente x unidades");
             int opcion = sc.nextInt();
-            
-            if(opcion == 1){
-               
-                System.out.println("Ingrese unidad x");
-                int x = sc.nextInt();
-                
-                System.out.println(bst.keys(x, bst.max()));
-          
-            }
-            
-            if(opcion ==2){
-                System.out.println("Ingrese unidad x");
-                int x = sc.nextInt();
-                
-                System.out.println(bst.keys(bst.min(),x));
-                
-            }
-            if(opcion == 3){
-                System.out.println("Ingrese unidad x");
-                int x = sc.nextInt();
-                
-                bst.get(x).forEach((t) -> {
-                    System.out.println("producto " + t.get_producto() + "conteo "+ t.get_conteo());
-                });
-            }
+
             // fin test
             
         }
