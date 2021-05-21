@@ -5,14 +5,14 @@ import Laboratorio2.MaxPQ;
 import Laboratorio2.tripleta;
 import java.util.*; 
 import java.io.*;   
-
+import java.lang.*; 
 
 public class Laboratorio2{
     public static void main(String[] args) throws IOException{
     
         BufferedReader reader;
         BufferedWriter writer;
-        
+      
         
         //File folder = new File("./csv");
         File folder = new File("C:\\Users\\Cristián Rodríguez\\Documents\\NetBeansProjects\\Laboratorio2\\src\\laboratorio2\\csv");
@@ -21,12 +21,14 @@ public class Laboratorio2{
         File[] fileList = folder.listFiles();
         ArrayList<String> files = new ArrayList<String>();//nombres
         ArrayList<String> filenames = new ArrayList<String>(); //rutas
+        
+        /*
         //para el arbol binario (la 4)
         ArrayList<ArrayList<ArrayList<String>>> datasets = new ArrayList<ArrayList<ArrayList<String>>>();
         ArrayList<ArrayList<tripleta>> datasets_triple = new ArrayList<ArrayList<tripleta>>();
+        */
         
         int cont =0;
-        
         for(int i = 0; i < fileList.length; i++){
             if(fileList[i].isFile()){
                 try{
@@ -38,20 +40,15 @@ public class Laboratorio2{
                 }
             } 
         }try{
-            int indice =0;
             
-            int largo = filenames.get(0).length();
-            
+            int largo = filenames.get(0).length();  
             String outfilename = filenames.get(0).substring(0, largo-4) + new String("_tres") + filenames.get(0).substring(largo-4);
             writer = new BufferedWriter(new FileWriter(outfilename, false));
+            
             for(String fn : filenames){
-                ArrayList<ArrayList<String>> dataset = new ArrayList<ArrayList<String>>();   
-                //System.out.println(fn);
-                    
-                reader = new BufferedReader(new FileReader(fn));
-
+                ArrayList<ArrayList<String>> dataset = new ArrayList<ArrayList<String>>();      
                 
-                
+                reader = new BufferedReader(new FileReader(fn));              
                 //lee por lineas ||
                 String line = reader.readLine();
         
@@ -65,9 +62,9 @@ public class Laboratorio2{
                     dataset.add(parsing1);
                     line = reader.readLine();
                 }
-                //
+                //Arreglo de tripletas
                 ArrayList<tripleta> t_count = new ArrayList<tripleta>();
-                //quita el categoria
+                //quita la categoria
                 String cat = fileList[cont].getName();
                 cat = cat.substring(3, cat.length()-4);
                 //
@@ -81,58 +78,108 @@ public class Laboratorio2{
                             found = true;
                             search.incConteo();    
                         }
-                    }
-                    //  
+                    }    
                     if(!found){ //cat= nombre categoria sin scv ni mx-
                         //tripleta new_tripleta = new tripleta(cat, prod_name);
                         t_count.add(new tripleta(cat,prod_name));
                     }     
                 }
-                datasets.add(dataset);
-                datasets_triple.add(t_count);
-                //
-                //cola prioridad  escribir en un archivo los 3 productos mas y menos comprados por archivo
-                //
+                //datasets.add(dataset);
+                //datasets_triple.add(t_count); 
            
-            // comparar OE y tiempo de 3 algoritmos de ordenamiento
-            ArrayList<tripleta> datasetSort = datasets_triple.get(0);
-            ArrayList<tripleta> datasetUnsort = datasets_triple.get(0);
+           //Lista usada para los ordenamientos
+            ArrayList<tripleta> datasetSort = new ArrayList<tripleta>(); 
            
+            datasetSort.addAll(t_count);
 
-            
-            MergeSort mergeSort = new MergeSort(datasetSort);
-            SelectionSort selectionSort = new SelectionSort();
+            /*System.out.println("Arreglo desordenado" + cont );
+            for(tripleta t : datasetSort){
+                System.out.print(t.get_conteo() + " ");
+            }
+            System.out.println("");
+      */
+            //necesitamos la Cola de prioridad en todos los ciclos
             MaxPQ<tripleta> pq = new MaxPQ<tripleta>();
             
-            if(indice ==0){//para que funcione en el primer archivo, falta comparar tiempos y OE.
-          //  Selection Sort:
-          
-          //  selectionSort.sort(datasetSort);
-          //  selectionSort.printArray(datasetSort); //funciona
+        if(cont == 0){//para que funcione en el primer archivo.
+ 
+            SelectionSort selectionSort = new SelectionSort();
+                
+            //Selection Sort:
+            long nano_startTime1 = System.nanoTime();
+            selectionSort.sort(datasetSort);
+            long nano_endTime1 = System.nanoTime();
             
+            /*
+            System.out.println("Arreglo ordenado con SelectionSort:");
+            selectionSort.printArray(datasetSort);
+            */
             
+            System.out.println("");
             
-           // datasetSort = datasetUnsort;
+            System.out.println("Tiempo ejecución SelectionSort nano segundos: " + (nano_endTime1 - nano_startTime1 ));
+            
+            Collections.copy(datasetSort,t_count);
+            
+           /* System.out.println("Arreglo desordenado");
+            for(tripleta t : datasetSort){
+                System.out.print(t.get_conteo() + " ");
+            }*/
+            System.out.println("");
+            
            //MERGE SORT:
-           //mergeSort.sort(0, datasetSort.size()-1);   //funciona, comprobar imprimiendo el datasetSort
+           MergeSort mergeSort = new MergeSort(datasetSort);
            
-           
-           //HEAP SORT:
-          /*  tripleta[] data;
-            data = new tripleta[datasetUnsort.size()];
+           long nano_startTime2 = System.nanoTime();
+            mergeSort.sort(0, datasetSort.size()-1);
+             long nano_endTime2 = System.nanoTime();
+            System.out.println("Tiempo ejecución MergeSort nano segundos: " + (nano_endTime2 - nano_startTime2 ));
+              
+            /*System.out.println("Arreglo ordenado con MergeSort:");
+            for(tripleta t : datasetSort){
+                System.out.print(t.get_conteo() + " ");
+            }*/
+            System.out.println("");
+       
+   
+            Collections.copy(datasetSort,t_count);
             
-            for(int i =0; i<datasetUnsort.size(); i++){
-            data[i] = datasetUnsort.get(i);    
+            /*System.out.println("Arreglo desordenado");
+            for(tripleta t : datasetSort){
+                System.out.print(t.get_conteo() + " ");
+            }*/
+            System.out.println("");
+            
+
+           //HEAP SORT:
+            //System.out.println("Arreglo ordenado con HeapSort");
+            tripleta[] data;
+            data = new tripleta[datasetSort.size()];
+            
+            long nano_startTime3 = System.nanoTime();
+            for(int i =0; i<datasetSort.size(); i++){
+            data[i] = datasetSort.get(i);    
             pq.insert(data[i]);
             }
-
-            while(!pq.isEmpty()){
-            System.out.println(pq.delMax().get_conteo());
-        }
-        */
-
-            }
+            long nano_endTime3 = System.nanoTime();
+            System.out.println("Tiempo ejecución HeapSort nano segundos: " + (nano_endTime3 - nano_startTime3 ));
             
+           /* while(!pq.isEmpty()){
+            System.out.print(pq.delMax().get_conteo() + " ");
+        }
+            */
+            }else{//otros ciclos
+            tripleta[] data;
+            data = new tripleta[datasetSort.size()];
+            
+            for(int i =0; i<datasetSort.size(); i++){
+            data[i] = datasetSort.get(i);    
+            pq.insert(data[i]);
+            }//tenemos mega pq con todas las tripletas
+            
+        }
+            
+        //PQ que obtiene los 3 elementos más y menos comprados de cada archivo csv.
          tripleta[] data;
             data = new tripleta[t_count.size()];
             
@@ -145,20 +192,32 @@ public class Laboratorio2{
         tres =  pq.print3(pq);
         //System.out.println(tres);
            
-        writer.write("Tres productos más y menos solicitados de " +cat + "\n");
+        writer.write("Tres productos más y menos solicitados de " +cat + ":" + "\n");
         for(int i =0; i< tres.size(); i++){
             writer.write(tres.get(i) + "\n");
-            
             }
             writer.write("\n");
-            //datasetSort = datasetUnsort;
-            //quickSort.sort(0, datasetSort.size()-1);
             
-            //
-            // arbol binario compara todos los dataset
-            // 
+         //BST que responde a preg del usuario.
+            datasetSort.clear();
+            BST<Integer, ArrayList<tripleta>> bst = new BST<Integer,ArrayList<tripleta>>();
+            
+            while(!pq.isEmpty()){
+                datasetSort.add(pq.delMax());
+            }
+            
+                bst.put(1, datasetSort);
+            
+            
+            
+            //Ideas: meter TODAS tripletas en la pq, de forma que esten ordenadas,
+                    //luego podemos meterlas con su contador asociado a la cantidad comprada
+                    //ahi hacer el cambio en el bst tal que si 2 tienen mismo contador, las meta en el arraylist de tripletas
+            
+            
+            
+            
         reader.close();
-       
         cont++;  
             }
              writer.close();
