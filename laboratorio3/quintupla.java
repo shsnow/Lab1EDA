@@ -9,6 +9,7 @@ public class quintupla implements Comparable
     private int conteo;
     private float stars;
     private float precioMax;
+    private int conteoStars;
     private int conteoPrecioMax;
     
     public quintupla()
@@ -78,12 +79,18 @@ public class quintupla implements Comparable
         stars = s;
     }
     
-    public void newPromStar(float s){
+    public float newPromStar(float s){
         float aux = stars;
         
         stars = (aux*(conteo-1) + s)/conteo;
         
+        return stars;
     }
+     public void incConteoStars(){
+        conteoStars++;
+    }
+    
+    
     
     public float get_precioMax(){
         return precioMax;
@@ -93,10 +100,11 @@ public class quintupla implements Comparable
         precioMax = p;
     }
     
-    public void newPromPrecio(float p){
+    public float newPromPrecio(float p){
         float aux = precioMax;
       precioMax = (aux*(conteoPrecioMax-1) + p)/conteoPrecioMax;
-      //Profe si esta leyendo esta linea, hola.
+      
+      return precioMax;
     }
     public void incConteoPrecioMax(){
         conteoPrecioMax++;
